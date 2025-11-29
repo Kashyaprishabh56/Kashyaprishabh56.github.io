@@ -298,3 +298,208 @@ body {
   background-color: #d9534f;
   color: #fff;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("AdobeStock_300091669_Preview.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow-x: hidden;
+
+  /* So the text looks readable on bright images */
+  font-family: 'Dancing Script', cursive;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* The magic dark-shadow overlay */
+  background: rgba(0, 0, 0, 0.6); /* change 0.45 → 0.3 or 0.6 as per your liking */
+
+  z-index: -1; /* stays behind everything */
+}
+
+/* ---------- Background base (blurred image) ---------- */
+.bg {
+  position: fixed;
+  inset: 0;                 /* top:0; right:0; bottom:0; left:0 */
+  background-image: url("your-image.jpg"); /* <-- change this */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  filter: blur(8px) saturate(1.05); /* blur amount — increase for stronger blur */
+  transform: scale(1.03);  /* avoid blurred edges */
+  z-index: -3;
+  will-change: transform, opacity, filter;
+  animation: bgSlowShift 18s ease-in-out infinite alternate;
+  opacity: 1;
+}
+
+/* subtle slow motion to keep background alive */
+@keyframes bgSlowShift {
+  0% { transform: scale(1.03) translateY(0px) rotate(0deg); filter: blur(8px) saturate(1.05); }
+  100% { transform: scale(1.04) translateY(-8px) rotate(0.02deg); filter: blur(9px) saturate(1.08); }
+}
+
+/* ---------- Gradient overlay + darkening + animated fade ---------- */
+.bg-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  /* stack multiple layers: dark shadow + romantic gradient */
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 60%),
+    linear-gradient(135deg, rgba(255,70,120,0.06), rgba(255,140,170,0.10)); /* subtle pink-red tint */
+  mix-blend-mode: normal;
+  opacity: 0.95;
+  transition: opacity 1s ease;
+  animation: overlayPulse 8s ease-in-out infinite;
+}
+
+/* darker vignette in corners */
+.bg-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 10% 10%, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 30%),
+    radial-gradient(ellipse at 90% 10%, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 30%),
+    radial-gradient(ellipse at 10% 90%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 35%),
+    radial-gradient(ellipse at 90% 90%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 35%);
+  mix-blend-mode: multiply;
+}
+
+/* animated subtle pulsing of overlay (gives gentle fade) */
+@keyframes overlayPulse {
+  0% { opacity: 0.92; transform: none; }
+  50% { opacity: 0.98; transform: scale(1.001); }
+  100% { opacity: 0.92; transform: none; }
+}
+
+/* ---------- Envelope stacking (ensure envelope stays above background) ---------- */
+.envlope-wrapper,
+#envelope {
+  position: relative;
+  z-index: 1; /* envelope and its children sit above background layers */
+}
+
+/* optionally increase z-index of hearts inside envelope if needed */
+#envelope .hearts { z-index: 2; }
+
+/* ---------- 3D particle layer & perspective ---------- */
+.particle-3d-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0; /* behind envelope */
+  perspective: 1000px;
+  overflow: visible;
+}
+
+/* 3D heart particle */
+.p3d {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms linear;
+}
+.p3d .face {
+  position: absolute;
+  inset: 0;
+  transform-origin: center;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(255,80,120,1), rgba(255,140,170,1));
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+/* small variants */
+.p3d.small { width: 22px; height: 22px; }
+.p3d.large { width: 56px; height: 56px; }
+
+/* ---------- Emoji particles (floating) ---------- */
+.emoji {
+  position: absolute;
+  font-size: 20px;
+  line-height: 1;
+  transform-origin: center;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  text-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+/* bigger emojis for explosion */
+.emoji.big { font-size: 34px; }
+
+/* ---------- Cursor heart trail ---------- */
+.trail-heart {
+  position: fixed;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  transform-origin: center;
+  opacity: 0;
+  transition: opacity 260ms linear, transform 260ms linear;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25));
+  z-index: 9999;
+}
+.trail-heart .tshape {
+  width: 100%; height: 100%;
+  transform: rotate(-45deg);
+  border-radius: 3px;
+  background: linear-gradient(135deg, rgba(255,80,120,1), rgba(255,140,170,1));
+}
+
+/* ---------- Heartbeat background glow overlay ---------- */
+.bg-heartbeat {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1; /* behind everything else */
+  background: radial-gradient(circle at 50% 45%, rgba(255,80,120,0.06), rgba(0,0,0,0.45));
+  opacity: 0;
+  transition: opacity 120ms linear, transform 120ms linear;
+  mix-blend-mode: screen;
+}
+
+/* subtle glow element for sync (actual glow via transform/scale) */
+.bg-heartbeat::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(255,80,140,0.12), rgba(255,80,140,0.02) 40%, rgba(0,0,0,0) 70%);
+  opacity: 0.9;
+  transform: scale(1);
+  transition: transform 120ms linear, opacity 120ms linear;
+}
+
+/* ---------- Small helpers for envelope explosion/emojis ---------- */
+.explosion-particle {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* ensure particle layers stack properly */
+.bg { z-index: -3; }
+.bg-overlay { z-index: -2; }
+.heart-particles { z-index: 0; } /* as before */
+.particle-3d-layer { z-index: 0; }
+#envelope { z-index: 1; }
