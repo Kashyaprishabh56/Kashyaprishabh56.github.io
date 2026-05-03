@@ -538,8 +538,11 @@ body.light-mode .hero-visual::before {
 
 .experience-tabs {
   display: grid;
+  position: relative;
+  z-index: 1;
   align-content: start;
   border-right: 1px solid var(--line);
+  pointer-events: auto;
 }
 
 .experience-tab {
@@ -554,6 +557,7 @@ body.light-mode .hero-visual::before {
   padding: 1rem;
   text-align: left;
   cursor: pointer;
+  pointer-events: auto;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   transition: background 180ms ease, color 180ms ease, padding 180ms ease;

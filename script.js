@@ -7,7 +7,7 @@ const profile = {
 
 const roles = [
   "IT Lead",
-  "AI Research Analyst",
+  "Research Analyst",
   "Frontend Developer",
   "Python Automation Builder",
 ];
@@ -33,9 +33,9 @@ const experiences = [
     period: "January 2025 - December 2025",
     location: "Delhi",
     summary:
-      "Worked on research projects around RAG, LlamaIndex, RankRAG, Hugging Face, Google AI Studio, data collection, tuning, visualization, and frontend authentication flows.",
+      "Worked on AI research projects covering RAG, LlamaIndex, RankRAG, Hugging Face, Google AI Studio, data collection, tuning, visualization, and React authentication flows.",
     impact: [
-      "Created React login and registration UI/UX, with authentication support through MongoDB.",
+      "Created login and registration UI/UX in React, with authentication support through MongoDB.",
       "Tuned models on a 2 lakh plus multimodal PCMB JEE Advanced and Mains dataset.",
       "Supported next generation AI model training and data collection for a health ministry flagship project.",
     ],
@@ -50,8 +50,8 @@ const experiences = [
       "Handled FTTH network support, signal testing, first level testing, TAC-1 operations, and live user query resolution.",
     impact: [
       "Worked with HummingBard tooling to monitor Fiber to the Home network lines.",
-      "Tested signals and supported first level troubleshooting workflows.",
-      "Balanced operational checks with real-time customer query handling.",
+      "Tested network signals and supported first level troubleshooting workflows.",
+      "Handled TAC-1 operations while responding to live user queries.",
     ],
     stack: ["FTTH", "FLT", "TAC-1", "Network Operations"],
   },
@@ -174,11 +174,13 @@ const skills = [
 ];
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let activeExperienceIndex = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
   applySavedTheme();
-  renderExperience();
+  renderExperienceTabs();
   setupExperienceSwitcher();
+  selectExperience(0);
   renderProjects("All");
   renderProjectFilters();
   renderSkills();
@@ -196,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.showExperience = (event, index) => {
   if (event) event.preventDefault();
-  renderExperience(Number(index));
+  selectExperience(index);
 };
 
 function refreshIcons() {
@@ -235,10 +237,15 @@ function updateThemeIcon() {
   toggle.innerHTML = `<i data-lucide="${isLight ? "sun" : "moon"}"></i>`;
 }
 
-function renderExperience(activeIndex = 0) {
+function getExperienceIndex(index) {
+  const parsedIndex = Number(index);
+  if (!Number.isInteger(parsedIndex)) return 0;
+  return Math.min(Math.max(parsedIndex, 0), experiences.length - 1);
+}
+
+function renderExperienceTabs() {
   const tabs = document.getElementById("experienceTabs");
-  const panel = document.getElementById("experiencePanel");
-  if (!tabs || !panel) return;
+  if (!tabs) return;
 
   tabs.innerHTML = experiences
     .map(
@@ -248,13 +255,11 @@ function renderExperience(activeIndex = 0) {
           type="button"
           role="tab"
           id="exp-tab-${index}"
-          aria-controls="exp-panel"
-          aria-selected="${index === activeIndex}"
-          tabindex="${index === activeIndex ? 0 : -1}"
+          aria-controls="experiencePanel"
+          aria-selected="false"
+          tabindex="-1"
           data-experience-index="${index}"
           aria-label="Show ${item.role} experience at ${item.company}"
-          onclick="showExperience(event, ${index})"
-          onpointerdown="showExperience(event, ${index})"
         >
           <strong>${item.role}</strong>
           <span>${item.company}</span>
@@ -262,10 +267,39 @@ function renderExperience(activeIndex = 0) {
       `
     )
     .join("");
+}
+
+function renderExperience(activeIndex = activeExperienceIndex) {
+  if (!document.querySelector("[data-experience-index]")) {
+    renderExperienceTabs();
+  }
+  selectExperience(activeIndex);
+}
+
+function selectExperience(index, options = {}) {
+  const normalizedIndex = getExperienceIndex(index);
+  activeExperienceIndex = normalizedIndex;
+
+  document.querySelectorAll("[data-experience-index]").forEach((tab) => {
+    const isActive = Number(tab.dataset.experienceIndex) === normalizedIndex;
+    tab.setAttribute("aria-selected", String(isActive));
+    tab.tabIndex = isActive ? 0 : -1;
+  });
+
+  renderExperiencePanel(normalizedIndex);
+
+  if (options.focusTab) {
+    const activeTab = document.querySelector(`[data-experience-index="${normalizedIndex}"]`);
+    if (activeTab) activeTab.focus({ preventScroll: true });
+  }
+}
+
+function renderExperiencePanel(activeIndex) {
+  const panel = document.getElementById("experiencePanel");
+  if (!panel) return;
 
   const item = experiences[activeIndex];
   panel.setAttribute("role", "tabpanel");
-  panel.setAttribute("id", "exp-panel");
   panel.setAttribute("aria-labelledby", `exp-tab-${activeIndex}`);
   panel.innerHTML = `
     <p class="eyebrow">${item.period} / ${item.location}</p>
@@ -286,21 +320,19 @@ function setupExperienceSwitcher() {
   if (!tabs) return;
 
   const activateTab = (tab) => {
-    const index = Number(tab.dataset.experienceIndex);
-    if (!Number.isInteger(index)) return;
-    renderExperience(index);
-    const activeTab = document.querySelector(`[data-experience-index="${index}"]`);
-    if (activeTab) activeTab.focus({ preventScroll: true });
+    selectExperience(tab.dataset.experienceIndex, { focusTab: true });
   };
 
   tabs.addEventListener("pointerdown", (event) => {
     const tab = event.target.closest("[data-experience-index]");
-    if (tab) activateTab(tab);
+    if (tab) selectExperience(tab.dataset.experienceIndex);
   });
 
   tabs.addEventListener("click", (event) => {
     const tab = event.target.closest("[data-experience-index]");
-    if (tab) activateTab(tab);
+    if (!tab) return;
+    event.preventDefault();
+    activateTab(tab);
   });
 
   tabs.addEventListener("keydown", (event) => {
