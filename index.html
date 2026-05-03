@@ -1,55 +1,324 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Love letter for wife</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap"
-      rel="stylesheet" />
-    <link rel="stylesheet" href="love letter 2.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Rishabh Kashyap - developer portfolio for frontend, AI research, Python automation, and IT systems work."
+    />
+    <title>Rishabh Kashyap | Developer Portfolio</title>
+    <link rel="preload" href="assets/profile.png" as="image" />
+    <link rel="stylesheet" href="styles.css?v=5" />
+    <script>
+      tailwind = {
+        config: {
+          theme: {
+            extend: {
+              fontFamily: {
+                sans: [
+                  "-apple-system",
+                  "BlinkMacSystemFont",
+                  "Segoe UI",
+                  "Inter",
+                  "Roboto",
+                  "sans-serif",
+                ],
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="script.js?v=5"></script>
   </head>
-  <body>
-<!-- 3D particle layer & heartbeat overlay (place BEFORE envelope wrapper) -->
-<div class="particle-3d-layer" aria-hidden="true"></div>
-<div class="bg-heartbeat" aria-hidden="true"></div>
+  <body class="antialiased">
+    <a class="skip-link" href="#main">Skip to content</a>
 
+    <header class="site-header" id="siteHeader">
+      <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8" aria-label="Primary">
+        <a href="#home" class="brand-mark" aria-label="Rishabh Kashyap home">
+          <span class="brand-glyph">RK</span>
+          <span class="hidden sm:inline">Rishabh Kashyap</span>
+        </a>
 
-    <!-- tiktok meowish -->
-    <div class="envlope-wrapper">
-      <div id="envelope" class="close">
-        <div class="front flap"></div>
-        <div class="front pocket"></div>
-        <div class="letter">
-          <div class="content">
-            <div class="words line1">To: My Wife</div>
-            <div class="words line2">Dear Shillu / Wife / Shilpa — you are so beautiful</div>
-            <div class="words line3">That every time I see you</div>
-            <div class="words line4">my world stops.</div>
+        <div class="nav-links hidden items-center gap-1 md:flex" id="desktopNav">
+          <a href="#profile" class="nav-link">Profile</a>
+          <a href="#experience" class="nav-link">Experience</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#stack" class="nav-link">Stack</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button class="icon-button" type="button" data-theme-toggle aria-label="Toggle theme">
+            <i data-lucide="moon"></i>
+          </button>
+          <button class="icon-button md:hidden" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false">
+            <i data-lucide="menu"></i>
+          </button>
+        </div>
+      </nav>
+
+      <div class="mobile-menu hidden border-t border-white/10 px-4 pb-4 md:hidden" id="mobileMenu">
+        <a href="#profile" class="mobile-link">Profile</a>
+        <a href="#experience" class="mobile-link">Experience</a>
+        <a href="#projects" class="mobile-link">Projects</a>
+        <a href="#stack" class="mobile-link">Stack</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+      </div>
+      <div class="scroll-progress" id="scrollProgress"></div>
+    </header>
+
+    <main id="main">
+      <section id="home" class="hero-section relative isolate overflow-hidden">
+        <canvas id="ambientCanvas" class="ambient-canvas" aria-hidden="true"></canvas>
+        <div class="hero-grid mx-auto grid max-w-7xl items-center gap-12 px-4 pb-10 pt-28 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:px-8 lg:pb-8 lg:pt-32">
+          <div class="hero-copy">
+            <p class="eyebrow">Developer portfolio / Gurugram, India</p>
+            <h1>Rishabh Kashyap</h1>
+            <p class="role-line">
+              <span id="typedRole">IT Lead</span>
+              <span class="typing-caret" aria-hidden="true"></span>
+            </p>
+            <p class="hero-lede">
+              I build clean frontend experiences, AI research workflows, Python automations,
+              and operational systems that turn messy work into usable products.
+            </p>
+
+            <div class="cta-row">
+              <button class="btn btn-primary" type="button" data-open-resume>
+                <i data-lucide="file-search"></i>
+                View resume
+              </button>
+              <a class="btn btn-secondary" href="CV_Rishabh.pdf" download="Rishabh-Kashyap-Resume.pdf">
+                <i data-lucide="download"></i>
+                Download
+              </a>
+              <a
+                class="btn btn-ghost"
+                href="https://github.com/kashyaprishabh56"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i data-lucide="github"></i>
+                GitHub
+              </a>
+              <a
+                class="btn btn-ghost"
+                href="https://www.linkedin.com/in/rishabh-kashyap-5ab78930a/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i data-lucide="linkedin"></i>
+                LinkedIn
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Portfolio visual summary">
+            <div class="profile-panel reveal">
+              <img src="assets/profile.png" alt="Rishabh Kashyap GitHub avatar" />
+              <div>
+                <p class="panel-kicker">Current focus</p>
+                <h2>AI systems, React UI, Python automation</h2>
+              </div>
+            </div>
+            <div class="signal-board reveal" style="--delay: 120ms">
+              <div class="signal-line">
+                <span>RAG / RankRAG</span>
+                <strong>Research</strong>
+              </div>
+              <div class="signal-line">
+                <span>SAP B1 / WMS</span>
+                <strong>Ops</strong>
+              </div>
+              <div class="signal-line">
+                <span>React auth UI</span>
+                <strong>Frontend</strong>
+              </div>
+            </div>
+            <div class="code-strip reveal" style="--delay: 220ms">
+              <span>const builder = "frontend + AI + automation";</span>
+            </div>
           </div>
         </div>
-        
-        <div class="hearts">
-          <div class="heart a1"></div>
-          <div class="heart a2"></div>
-          <div class="heart a3"></div>
+
+        <div class="mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
+          <div class="metric-strip reveal" aria-label="Portfolio highlights">
+            <div>
+              <strong data-count="8">0</strong>
+              <span>Projects built</span>
+            </div>
+            <div>
+              <strong data-count="200000">0</strong>
+              <span>Dataset records tuned</span>
+            </div>
+            <div>
+              <strong data-count="4">0</strong>
+              <span>Work roles</span>
+            </div>
+            <div>
+              <strong>2024</strong>
+              <span>B.Tech CSE AIML</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="profile" class="section-block">
+        <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Profile</p>
+            <h2>Frontend clarity with AI depth.</h2>
+          </div>
+          <div class="story-copy reveal">
+            <p>
+              Rishabh is an IT professional with a Computer Science background in Artificial
+              Intelligence and Machine Learning. His work spans React interfaces, WordPress
+              support, network operations, Python scraping, model tuning, RAG workflows, and
+              API integrations inside business systems.
+            </p>
+            <p>
+              The through-line is practical engineering: understand the user, debug the system,
+              automate the repetitive part, and ship an interface that feels simple at the edge.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" class="section-block">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Experience</p>
+            <h2>Built across product, research, and operations.</h2>
+          </div>
+
+          <div class="experience-shell reveal">
+            <div class="experience-tabs" id="experienceTabs" role="tablist" aria-label="Work experience"></div>
+            <article class="experience-panel" id="experiencePanel" tabindex="0"></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section-block">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Projects</p>
+            <h2>Selected builds from web apps to computer vision.</h2>
+          </div>
+
+          <div class="filter-bar reveal" id="projectFilters" aria-label="Project filters"></div>
+          <div class="project-grid" id="projectGrid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="stack" class="section-block">
+        <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.75fr_1.25fr] lg:px-8">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Stack</p>
+            <h2>Tools for interface, data, AI, and delivery.</h2>
+          </div>
+          <div class="stack-board reveal" id="stackBoard"></div>
+        </div>
+      </section>
+
+      <section id="education" class="section-block">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="education-grid reveal">
+            <div>
+              <p class="eyebrow">Education</p>
+              <h2>B.Tech CSE (AIML)</h2>
+              <p>Maharshi Dayanand University - Rohtak / 2021 - 2024</p>
+            </div>
+            <div>
+              <h3>Diploma in Computer Engineering</h3>
+              <p>DPG Polytechnic - Gurgaon / 2018 - 2021</p>
+            </div>
+            <div>
+              <h3>Languages</h3>
+              <p>English, Hindi</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section-block contact-section">
+        <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Contact</p>
+            <h2>Ready for frontend, AI, and IT systems roles.</h2>
+            <div class="contact-actions">
+              <a class="btn btn-primary" href="mailto:kashyaprishabh56@gmail.com">
+                <i data-lucide="mail"></i>
+                Email
+              </a>
+              <a class="btn btn-secondary" href="tel:+919717496492">
+                <i data-lucide="phone"></i>
+                Call
+              </a>
+            </div>
+          </div>
+
+          <form class="contact-form reveal" id="contactForm">
+            <label>
+              <span>Name</span>
+              <input type="text" name="name" autocomplete="name" placeholder="Your name" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" placeholder="you@example.com" required />
+            </label>
+            <label>
+              <span>Message</span>
+              <textarea name="message" rows="5" placeholder="Tell me what you want to build" required></textarea>
+            </label>
+            <button class="btn btn-primary w-full justify-center" type="submit">
+              <i data-lucide="send"></i>
+              Prepare email
+            </button>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <p>Built for Rishabh Kashyap from CV_Rishabh.pdf.</p>
+        <div class="footer-links">
+          <button type="button" data-open-resume>View resume</button>
+          <a href="CV_Rishabh.pdf" download="Rishabh-Kashyap-Resume.pdf">Download resume</a>
+          <a href="https://github.com/kashyaprishabh56" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/rishabh-kashyap-5ab78930a/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
       </div>
-      <!-- add this inside <body>, e.g. after the envelope div -->
-<audio id="envelope-audio" preload="auto">
-  <source src="Suroor - Aditya Rikhari [320] Kbps-(SongsPk.com.se).mp3" type="audio/mpeg" />
-  <!-- fallback text -->
-  Your browser does not support the audio element.
-</audio>
+    </footer>
 
+    <div class="resume-modal hidden" id="resumeModal" role="dialog" aria-modal="true" aria-labelledby="resumeTitle">
+      <div class="modal-backdrop" data-close-resume></div>
+      <div class="modal-window" role="document">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Resume</p>
+            <h2 id="resumeTitle">Rishabh Kashyap CV</h2>
+          </div>
+          <div class="modal-actions">
+            <a class="icon-button" href="CV_Rishabh.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open resume in new tab">
+              <i data-lucide="external-link"></i>
+            </a>
+            <a class="icon-button" href="CV_Rishabh.pdf" download="Rishabh-Kashyap-Resume.pdf" aria-label="Download resume">
+              <i data-lucide="download"></i>
+            </a>
+            <button class="icon-button" type="button" data-close-resume aria-label="Close resume viewer">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+        </div>
+        <iframe title="Rishabh Kashyap resume preview" src="CV_Rishabh.pdf"></iframe>
+      </div>
     </div>
-    <div class="reset">
-      <button id="open">Open</button>
-      <button id="reset">Close</button>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="love letter 2.js"></script>
   </body>
 </html>
